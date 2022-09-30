@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <th:block th:include="general.html :: headerfiles"></th:block>
+    <style>
+        img {
+            height: auto;
+            max-width: 100%;
+        }
+        .rating {
+            padding: 0;
+            color: #ffa000;
+            list-style-type: none;
+        }
+        .rating li{
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body class="skin-light">
+<header th:insert="general.html :: header"></header>
+<div class="container" style="text-align: center"><h1>Wishlist</h1></div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 mb-5" style="background-color: white; margin: 2em">
+            <div class="" style="text-align: center; margin: 1em" >
+                <a href="#"><img src="https://drive.google.com/thumbnail?id=14jjpOIksPg_HyZcbqGKNm3chVHLlvX7j" alt="Sample"></a>
+            </div>
+            <div class="text-center pt-4">
+                <h5>Blue denim shirt</h5>
+                <ul class="rating">
+                    <li>
+                        <i class=" fa-star fas "></i>
+                    </li>
+                    <li>
+                        <i class=" fa-star fas "></i>
+                    </li>
+                    <li>
+                        <i class=" fa-star fas "></i>
+                    </li>
+                    <li>
+                        <i class=" fa-star fas "></i>
+                    </li>
+                    <li>
+                        <i class=" fa-star fas "></i>
+                    </li>
+                </ul>
+                <hr>
+                <h6 class="mb-3">17.99 $</h6>
+                <button type="button" class="btn btn-primary btn-sm mr-1 mb-2"><i
+                        class="fas fa-shopping-cart pr-2"></i>Add to cart
+                </button>
+                <button type="button" class="btn btn-light btn-sm mr-1 mb-2"><i
+                        class="fas fa-info-circle pr-2"></i>Details
+                </button>
+                <button type="button" class="btn btn-elegant btn-sm px-3 mb-2 material-tooltip-main"
+                        data-toggle="tooltip" data-placement="top" title="Remove from wishlist"><i
+                        class="fas fa-times"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="general.html :: footer"></div>
+</body>
+</html>

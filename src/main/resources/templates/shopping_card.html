@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <th:block th:include="general.html :: headerfiles">
+    </th:block>
+    <style>
+        table td {
+
+            font-size: 0.33vw;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column">
+<header th:insert="general.html :: header"> </header>
+<div class="container" style="margin-top: 10px; margin-bottom: 50px;">
+    <div class="main-body">
+        <card class="card" th:if="${products.isEmpty()}">
+            <div class="card-body" >
+                <div class="text-center">
+                    <h3>Ваша корзина пуста</h3>
+                    <button  type="button" class="btn btn-warning" style="color:#1d3c45 ;background-color: #ff8d1e">В каталог товаров</button>
+                </div>
+            </div>
+        </card>
+        <div class="table-responsive">
+        <table class="table table-borderless"  style="width: 98%;" th:if="${not products.isEmpty()}">
+            <thead style="color: #fff1e1">
+            <tr>
+                <th>Продукт</th>
+                <th>Описание</th>
+                <th>Количество</th>
+                <th>Цена</th>
+                <th>В итоге</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="product :${products}">
+                <tr>
+                    <td><img th:src="${product.getProduct().getLink()}" class="img-cart" onerror="src='https://doorlock78.ru/templates/img/foto_not_found.jpg'"></td>
+                    <td><h6 th:text="${product.getProduct().getName()}" style="color: #1d3c45"></h6></td>
+                    <td>
+                        <form class="form-inline">
+                            <input class="form-control" type="text" th:value="${product.getQuantity()}" readonly="readonly">
+                            <a th:href="@{shoppingcard/change(opisanie=${product.getProduct().getName()},quantity=${product.getQuantity()-1})}" class="btn btn-warning"><i class="fa fa-minus" aria-hidden="true"></i></a>
+                            <a th:href="@{shoppingcard/change(opisanie=${product.getProduct().getName()},quantity=${product.getQuantity()+1})}" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                            <a th:href="@{shoppingcard/delete(opisanie=${product.getProduct().getName()})}" class="btn btn-danger"><i class="fa fa-trash-o"></i></a>
+                        </form>
+                    </td>
+                    <td><h6 th:text="${product.getProduct().getPrice()}" style="color: #1d3c45"></h6></td>
+                    <td><h6 th:text="${product.getProduct().getPrice()*product.getQuantity()}" style="color: #1d3c45"></h6></td>
+                </tr>
+            </th:block>
+            <tr>
+                <td colspan="6">&nbsp;</td>
+            </tr>
+            <tr style="color: #ff8d1e">
+                <td colspan="4" class="text-left"><h5><strong>К оплате</strong></h5></td>
+                <td><h5 th:text="${sum}"><strong></strong></h5></td>
+            </tr>
+            <tr>
+                <td colspan="8" class="text-center">
+                    <a th:href="@{shoppingcard/orderconfirm}" class="btn btn-success btn-block">Заказать</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+
+<div th:replace="general.html :: footer"></div>
+</body>
+</html>

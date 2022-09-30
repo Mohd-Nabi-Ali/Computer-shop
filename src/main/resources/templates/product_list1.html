@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <th:block th:include="general.html :: headerfiles"></th:block>
+    <link rel="stylesheet" href="/css/mdb-pro.min.css">
+    <link rel="stylesheet" href="/css/mdb.ecommerce.min.css">
+    <style>
+        .img-product a img {
+            height: 7em;
+            max-width: 100%;
+        }
+        .img-product{
+            height: 100%;
+            display: grid;
+            align-items: center;
+            justify-content: center;
+        }
+        .href{
+            font-size: 1em;
+            text-decoration: none;
+        }
+        a{
+            color: darkorange;
+        }
+        .rating {
+            padding: 0;
+            color: #ffa000;
+            list-style-type: none;
+        }
+        .elem{
+            display: grid;
+            align-items: center;
+            justify-content: center;
+        }
+        .fa-star{
+            color: #ffa000;
+        }
+        .rating li{
+            display: inline-block;
+        }
+    </style>
+    <script>
+        function clear(){
+            $("input[type=checkbox]").prop('checked', false);
+            $("form#filter").trigger('reset');
+            $('#from,#search12,#to').val("");
+            $('.filled-in').prop('checked', false);
+            $('input[type=radio]').prop('checked', false);
+            $('input[name="quantity"]')[0].checked = true;
+        }
+        $(function() {
+            $('.clearbutton').on('click', clear);
+        })
+    </script>
+</head>
+<body class="skin-light">
+<header th:insert="general.html :: header"></header>
+<main>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-4 mb-4">
+                <section class="p-3 mr-3 card">
+                    <section>
+                        <h5>Categories</h5>
+                        <div class="text-muted small text-uppercase mb-5">
+                            <p class="mb-4">return to <a th:href="@{/}" class="card-link-secondary"><strong>list
+                                of Categories</strong></a></p>
+                            <th:block th:each="category : ${categories}">
+                                <p class="mb-3"><a
+                                        th:href="@{/categories/{category}(category=${category.getEngname()})}"
+                                        th:text="${category.getName()}"></a></p>
+                            </th:block>
+                        </div>
+                    </section>
+                    <form method="post" id="filter">
+                        <input type="hidden" name="category" th:value="${current_category.getEngname()}">
+                    <section>
+                        <h5 class="pt-2 mb-4">Filters</h5>
+                        <section class="mb-4">
+                            <div class="md-form md-outline mt-0 d-flex justify-content-between align-items-center">
+                                <input type="text" name="filterName" th:value="${filterName}" id="search12" class="form-control mb-0" placeholder="Название...">
+                                <button  type="submit" th:formaction="@{/categories/filter}" class="btn btn-flat btn-md px-3 waves-effect"><i
+                                        class="fas fa-search fa-lg"></i></button>
+                            </div>
+                        </section>
+                        <section class="mb-4">
+                            <h6 class="font-weight-bold mb-3">Avg. Customer Review</h6>
+                                <ul class="rating">
+                                    <div class="form-check pl-0 mb-3">
+                                        <input type="checkbox" class="form-check-input filled-in" id="five-rating" name="rating" value="5" th:checked="*{list_rating[5]}">
+                                        <label class="form-check-label small text-uppercase card-link-secondary" for="five-rating">
+                                            <ul class="rating">
+                                                <li>
+                                                    <i class=" fa-star fas "></i>
+                                                </li>
+                                                <li>
+                                                    <i class=" fa-star fas "></i>
+                                                </li>
+                                                <li>
+                                                    <i class=" fa-star fas "></i>
+                                                </li>
+                                                <li>
+                                                    <i class=" fa-star fas "></i>
+                                                </li>
+                                                <li>
+                                                    <i class=" fa-star fas "></i>
+                                                </li>
+                                            </ul>
+                                        </label>
+                                    </div>
+                                    <div class="form-check pl-0 mb-3">
+                                        <input type="checkbox" class="form-check-input filled-in" id="four-rating" name="rating" value="4" th:checked="*{list_rating[4]}">
+                                        <label class="form-check-label small text-uppercase card-link-secondary" for="four-rating">
+                                            <ul class="rating">
+                                                <li>
+                                                    <i class=" fa-star fas "></i>
+                                                </li>
+                                                <li>
+                                                    <i class=" fa-star fas "></i>
+                                                </li>
+                                                <li>
+                                                    <i class=" fa-star fas "></i>
+                                                </li>
+                                                <li>
+                                                    <i class=" fa-star fas "></i>
+                                                </li>
+                                                <li>
+                                                    <i class=" fa-star far "></i>
+                                                </li>
+                                            </ul>
+                                        </label>
+                                    </div>
+                                    <div class="form-check pl-0 mb-3">
+                                        <input type="checkbox" class="form-check-input filled-in" id="three-rating" name="rating" value="3" th:checked="*{list_rating[3]}">
+                                        <label class="form-check-label small text-uppercase card-link-secondary" for="three-rating">
+                                            <ul class="rating">
+                                                <li>
+                                                    <i class=" fa-star fas "></i>
+                                                </li>
+                                                <li>
+                                                    <i class=" fa-star fas "></i>
+                                                </li>
+                                                <li>
+                                                    <i class=" fa-star fas "></i>
+                                                </li>
+                                                <li>
+                                                    <i class=" fa-star far "></i>
+                                                </li>
+                                                <li>
+                                                    <i class=" fa-star far "></i>
+                                                </li>
+                                            </ul>
+                                        </label>
+                                    </div>
+                                    <div class="form-check pl-0 mb-3">
+                                        <input type="checkbox" class="form-check-input filled-in" id="two-rating" name="rating" value="2" th:checked="*{list_rating[2]}">
+                                        <label class="form-check-label small text-uppercase card-link-secondary" for="two-rating">
+                                            <ul class="rating">
+                                                <li>
+                                                    <i class=" fa-star fas "></i>
+                                                </li>
+                                                <li>
+                                                    <i class=" fa-star fas "></i>
+                                                </li>
+                                                <li>
+                                                    <i class=" fa-star far "></i>
+                                                </li>
+                                                <li>
+                                                    <i class=" fa-star far "></i>
+                                                </li>
+                                                <li>
+                                                    <i class=" fa-star far "></i>
+                                                </li>
+                                            </ul>
+                                        </label>
+                                    </div>
+                                    <div class="form-check pl-0 mb-3">
+                                        <input type="checkbox" class="form-check-input filled-in" id="one-star" name="rating" value="1" th:checked="*{list_rating[1]}">
+                                        <label class="form-check-label small text-uppercase card-link-secondary" for="one-star">
+                                            <ul class="rating">
+                                                <li>
+                                                    <i class=" fa-star fas "></i>
+                                                </li>
+                                                <li>
+                                                    <i class=" fa-star far "></i>
+                                                </li>
+                                                <li>
+                                                    <i class=" fa-star far "></i>
+                                                </li>
+                                                <li>
+                                                    <i class=" fa-star far "></i>
+                                                </li>
+                                                <li>
+                                                    <i class=" fa-star far "></i>
+                                                </li>
+                                            </ul>
+                                        </label>
+                                    </div>
+                                    <div class="form-check pl-0 mb-3">
+                                        <input type="checkbox" class="form-check-input filled-in" id="none-star" name="rating" value="0" th:checked="*{list_rating[0]}">
+                                        <label class="form-check-label small text-uppercase card-link-secondary" for="none-star">
+                                            <ul class="rating">
+                                                <li>
+                                                    <i class=" fa-star far "></i>
+                                                </li>
+                                                <li>
+                                                    <i class=" fa-star far "></i>
+                                                </li>
+                                                <li>
+                                                    <i class=" fa-star far "></i>
+                                                </li>
+                                                <li>
+                                                    <i class=" fa-star far "></i>
+                                                </li>
+                                                <li>
+                                                    <i class=" fa-star far "></i>
+                                                </li>
+                                            </ul>
+                                        </label>
+                                    </div>
+                                </ul>
+                        </section>
+                        <section class="mb-4">
+                            <h6 class="font-weight-bold mb-3">Наличие</h6>
+                            <div class="form-check pl-0 mb-3">
+                                <input type="radio" class="form-check-input" id="all" name="quantity" value="1" th:checked="*{confirm[0]}">
+                                <label class="form-check-label small text-uppercase card-link-secondary" for="all">Все</label>
+                            </div>
+                            <div class="form-check pl-0 mb-3">
+                                <input type="radio" class="form-check-input" id="instock" value="2" name="quantity" th:checked="*{confirm[1]}">
+                                <label class="form-check-label small text-uppercase card-link-secondary"  for="instock">В наличии</label>
+                            </div>
+                            <div class="form-check pl-0 mb-3">
+                                <input type="radio" class="form-check-input" id="notavailable" value="3" name="quantity" th:checked="*{confirm[2]}">
+                                <label class="form-check-label small text-uppercase card-link-secondary"  for="notavailable">Нет в наличии</label>
+                            </div>
+                            <div class="d-flex align-items-center mt-4 pb-1">
+                                <div class="md-form md-outline my-0">
+                                    <input id="from" type="number" name="minPrice" min="0" max = "1000000" class="form-control mb-0" th:value="${minPrice}">
+                                    <labels>₽ Min</labels>
+                                </div>
+                                <p class="px-2 mb-3 text-muted"> - </p>
+                                <div class="md-form md-outline my-0" style="vertical-align: top;">
+                                    <input id="to" type="number" name="maxPrice" min="0" max = "1000000" class="form-control mb-0" th:value="${maxPrice}">
+                                    <labels>₽ Max</labels>
+                                </div>
+                            </div>
+
+                        </section>
+                        <!-- Section: Price -->
+
+
+                        <th:block th:if="${manufactures.size()} > 0">
+                        <!-- Section: manufactures -->
+                        <section class="mb-4">
+
+                            <h6 class="font-weight-bold mb-3">Производитель</h6>
+                            <th:block th:if="${manufactures.size} < 4">
+                                <th:block  th:each="i: ${#numbers.sequence(0, manufactures.size - 1)}">
+                                    <div class="form-check pl-0 mb-3">
+                                        <input type="checkbox" name="manufactures_list" th:checked="*{manufactures_checked[i]}" th:value="${manufactures[i]}" class="form-check-input filled-in" th:id="${manufactures[i]}">
+                                        <label class="form-check-label small card-link-secondary"
+                                               th:text="${manufactures[i]}" th:for="${manufactures[i]}"></label>
+                                    </div>
+                                </th:block>
+                            </th:block>
+
+                            <th:block th:if="${manufactures.size} > 3">
+                                <th:block th:each="i: ${#numbers.sequence(0, 2)}">
+                                    <div class="form-check pl-0 mb-3">
+                                        <input type="checkbox" name="manufactures_list" th:checked="*{manufactures_checked[i]}" th:value="${manufactures[i]}" class="form-check-input filled-in" th:id="${manufactures[i]}">
+                                        <label class="form-check-label small card-link-secondary"
+                                               th:text="${manufactures[i]}" th:for="${manufactures[i]}"></label>
+                                    </div>
+                                </th:block>
+                                <a class="btn btn-link text-muted p-0" data-toggle="collapse" href="#collapseExample"
+                                   aria-expanded="false" aria-controls="collapseExample">
+                                    More
+                                </a>
+                                <div class="collapse pt-3" id="collapseExample">
+                                    <th:block th:each="i: ${#numbers.sequence(3, manufactures.size - 1)}">
+                                        <div class="form-check pl-0 mb-3">
+                                            <input type="checkbox" name="manufactures_list" th:checked="*{manufactures_checked[i]}" th:value="${manufactures[i]}" class="form-check-input filled-in" th:id="${manufactures[i]}">
+                                            <label class="form-check-label small card-link-secondary"
+                                                   th:text="${manufactures[i]}" th:for="${manufactures[i]}"></label>
+                                        </div>
+                                    </th:block>
+                                </div>
+                            </th:block>
+
+                        </section>
+                        <!-- Section: manufactures -->
+                        </th:block>
+                        <th:block th:if="${manufactures.size()} < 1">
+                        <h6 class="font-weight-bold mb-3">Производителей не найдено</h6>
+                        </th:block>
+                        <button type="submit" th:formaction="@{/categories/filter}" class="btn btn-success">Применить</button>
+                        <a type="button" class="clearbutton mt-2 btn btn-danger">Очистить фильтры</a>
+
+
+                    </section>
+                    <!-- Section: Filters -->
+                    </form>
+                </section>
+                <!-- Section: Sidebar -->
+
+            </div>
+            <!--Grid column-->
+            <!--Grid column-->
+            <div class="col-md-8 mb-4 card">
+                <!-- Section: Block Content -->
+                <div class="m-3" style="text-align: center">
+                    <label th:text="${current_category.getName()}"></label>
+                </div>
+                <section style="background-color: white">
+                    <!-- Grid row -->
+                    <div class="row mr-3 ml-3" th:if="${products}">
+                        <th:block th:each="product : ${products}">
+                                <div class="col-md-4 mb-5">
+                                    <!-- Card -->
+                                    <div class="" style="text-align: center;">
+                                        <div class="img-product">
+                                            <a th:href="@{/product/{id}(id=${product.getId()})}"><img th:src="${product.getLink()}" onerror="src='https://doorlock78.ru/templates/img/foto_not_found.jpg'"></a>
+                                        </div>
+                                        <div class="text-center pt-4">
+                                            <a th:href="@{/product/{id}(id=${product.getId()})}" th:text="${product.getName}" class="href"></a>
+                                            <p class="mb-1 mt-1"><span><strong style="font-weight:bold;" th:text="${product.getPrice} + ' ₽'"></strong></span></p>
+                                        </div>
+                                        <ul class="rating mb-5">
+                                            <div th:switch="${product.getRating()}">
+                                                <th:block th:switch="${product.getQuantity()}">
+                                                    <th:block th:case="0">
+                                                        <span class="mb-2 text-uppercase small" style="color: red; font-weight:bold;">Нет в наличии</span>
+                                                    </th:block>
+                                                    <th:block th:case="*">
+                                                        <span class="mb-2 text-uppercase small" style="color: green; font-weight:bold;">В наличии</span>
+                                                    </th:block>
+                                                </th:block>
+                                                <div th:case="0" class="mb-2 text-muted text-uppercase small">Нет отзывов</div>
+                                                <div>
+                                                    <th:block th:case="5">
+                                                        <li th:each="i: ${#numbers.sequence(1, product.getRating())}">
+                                                            <i class=" fa-star fas "></i>
+                                                        </li>
+                                                    </th:block>
+                                                    <th:block th:case="*">
+                                                        <li th:each="i: ${#numbers.sequence(1, product.getRating())}">
+                                                            <i class=" fa-star fas "></i>
+                                                        </li>
+                                                        <li th:each="i: ${#numbers.sequence(1, 5 - product.getRating())}">
+                                                            <i class=" fa-star far "></i>
+                                                        </li>
+                                                    </th:block>
+                                                </div>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </div>
+                        </th:block>
+                    </div>
+                    <div th:if="${products.size()} < 1">
+                        <h3 style="text-align: center">Нет товаров</h3>
+                        <p class="text-center">
+                        <img width="80%" src="https://pixy.org/src/79/thumbs350/791860.jpg">
+                        </p>
+                    </div>
+                </section>
+                <div class="mb-3" style="text-align: center" th:if="${products.size()} > 0">
+                    <label th:if="${products}" th:text="${current_category.getName()}"></label>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:replace="general.html :: footer"></div>
+</body>
+
+</html>
